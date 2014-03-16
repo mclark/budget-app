@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:whoward/mint-api.git
-  revision: ceb346802e03bf796bed9d5fd5c84d1de38911f4
+  revision: 2701208f94dbea68e709a6e35f924ba6f46c8777
   specs:
     mint-api (1.0.0)
       activesupport (>= 3.0.0)
