@@ -6,8 +6,14 @@ gem 'rails', '4.0.4'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# View template language
+gem 'haml'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
+
+# Javascript Dependency Management
+gem 'bower-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -27,7 +33,17 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+# Mint API
 gem 'mint-api', git: "git@github.com:whoward/mint-api.git"
+
+# Cron tasks
+gem 'whenever'
+
+# ActiveRecord Hierarchies
+gem 'acts_as_tree'
+
+# application configuration
+gem 'figaro'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
