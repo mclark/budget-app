@@ -1,0 +1,7 @@
+%h1 Dashboard
+
+- if MintAccount.count > 0
+  %p There are #{pluralize MintAccount.count, "new account"} from mint.com to #{link_to "review", review_path}
+
+- if MintTransaction.count > 0
+  %p There are #{pluralize MintTransaction.count, "new transaction"} from mint.com to #{link_to "review", review_path}

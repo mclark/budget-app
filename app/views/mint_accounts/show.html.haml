@@ -1,0 +1,13 @@
+%h1 Review New Account: #{account.name}
+
+%p.lead 
+  You have a new account imported from mint.com. Make changes below as you wish
+  then click the "Verify" button to import it.
+
+%p
+  There are <strong>#{account.transactions_count}</strong> transactions 
+  associated with this account worth a net value of <strong>#{number_to_currency cents_to_dollars account.transactions_value}</strong>
+
+= bootstrap_form_for account do |f|
+  = f.text_field :name
+  = f.submit "Verify", class: "btn btn-primary"

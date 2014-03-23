@@ -1,0 +1,23 @@
+%h1 Review New Transaction
+
+%p.lead
+  You have a new transaction imported from mint.com. Make changes below as you wish
+  then click the "Verify" button to import it.
+
+%dl
+  %dt Amount
+  %dd= number_to_currency cents_to_dollars mint_transaction.signed_cents
+
+  %dt Account
+  %dd= mint_transaction.account
+
+  %dt Category
+  %dd= mint_transaction.category
+
+= bootstrap_form_for imported_transaction do |f|
+  = f.collection_select :account_id, Account.all, :id, :name, {}, {class: "select2", style: "width:220px;"}
+  = f.collection_select :category_id, Category.all, :id, :name, {include_blank: "Import New: #{mint_transaction.category}"}, {class: "select2", style: "width:220px;"}
+  = f.text_field :date, type: "date"
+  = f.text_field :description
+  = f.text_area :notes
+  = f.submit "Verify", class: "btn btn-primary"

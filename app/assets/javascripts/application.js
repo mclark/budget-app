@@ -12,5 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+//= require twitter/bootstrap
+//= require select2
+//= require_self
+
+$(document).ready(function() {
+  $(".select2").select2();
+});
