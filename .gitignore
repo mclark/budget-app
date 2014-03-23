@@ -19,3 +19,6 @@
 
 # Ignore application configuration
 /config/application.yml
+
+# bower files
+vendor/assets/bower_components
