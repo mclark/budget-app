@@ -11,11 +11,12 @@
       - if Account.count > 0
         = drop_down_submenu "By Account" do
           - Account.all.each do |account|
-            = menu_item "#{account.name} #{badge account.transactions_count}".html_safe, account_transactions_path(account)
+            = menu_item "#{badge account.transactions_count} #{account.name}".html_safe, account_transactions_path(account)
 
-      = drop_down_submenu "By Category" do
-        = menu_item "Rent #{badge 3}".html_safe, "#"
-        = menu_item "Food #{badge 5}".html_safe, "#"
+      - if Category.count > 0
+        = drop_down_submenu "By Category" do
+          - Category.all.each do |category|
+            = menu_item "#{badge category.transactions_count} #{category.name}".html_safe, category_transactions_path(category)
 
   = menu_group pull: :right do
     = drop_down "Settings" do
