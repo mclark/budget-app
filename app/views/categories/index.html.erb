@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:parent_id) %></th>
+      <th><%= model_class.human_attribute_name(:parent) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -16,7 +16,7 @@
     <% @categories.each do |category| %>
       <tr>
         <td><%= link_to category.id, category_path(category) %></td>
-        <td><%= category.parent_id %></td>
+        <td><%= category.parent.try(:name) %></td>
         <td><%= category.name %></td>
         <td><%=l category.created_at %></td>
         <td>

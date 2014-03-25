@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def review_count
-    @review_count ||= MintAccount.count + MintTransaction.count
+    @review_count ||= MintAccount.not_imported.count + MintTransaction.not_imported.count
   end
 
   def transactions_count
