@@ -4,7 +4,7 @@
   You have a new transaction imported from mint.com. Make changes below as you wish
   then click the "Verify" button to import it.
 
-= bootstrap_form_for imported_transaction, url: mint_transaction_path(mint_transaction) do |f|
+= bootstrap_form_for imported_transaction, as: :transaction, url: mint_transaction_path(mint_transaction), method: :patch do |f|
   = f.hidden_field :cents
 
   .row-fluid
@@ -12,7 +12,7 @@
       = f.form_group :amount, label: {text: "Amount"} do
         %strong.form-control.read-only= number_to_currency cents_to_dollars mint_transaction.signed_cents
       = f.collection_select :account_id, Account.all, :id, :name, {help: "Imported from: #{mint_transaction.account}"}, {class: "select2", style: "width:100%;"}
-      = f.collection_select :category_id, Category.all, :id, :name, {help: "Imported from: #{mint_transaction.category}", include_blank: "Import New: #{mint_transaction.category}"}, {class: "select2", style: "width:100%;"}
+      = f.collection_select :category_id, Category.all, :id, :name, {help: "Imported from: #{mint_transaction.category}"}, {class: "select2", style: "width:100%;"}
 
     .span6
       = f.text_field :date, type: "date", class: "span12"

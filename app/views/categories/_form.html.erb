@@ -2,13 +2,13 @@
   <div class="control-group">
     <%= f.label :parent_id, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :parent_id, :class => 'text_field' %>
+      <%= f.collection_select :parent_id, Category.all, :id, :name, {:include_blank => true}, {:class => 'select2 text_field span2'} %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :name, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :name, :class => 'text_field' %>
+      <%= f.text_field :name, :class => 'text_field span2' %>
     </div>
   </div>
 
