@@ -1,6 +1,6 @@
 
 class Category < ActiveRecord::Base
-  acts_as_tree
+  acts_as_nested_set
   has_many :transactions
 
   def transactions_count

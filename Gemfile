@@ -46,7 +46,7 @@ gem 'mint-api', git: "git@github.com:whoward/mint-api.git"
 gem 'whenever'
 
 # ActiveRecord Hierarchies
-gem 'acts_as_tree'
+gem 'awesome_nested_set'
 
 # application configuration
 gem 'figaro'

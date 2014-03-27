@@ -15,8 +15,7 @@
 
       - if Category.count > 0
         = drop_down_submenu "By Category" do
-          - Category.all.each do |category|
-            = menu_item "#{badge category.transactions_count} #{category.name}".html_safe, category_transactions_path(category)
+          = render collection: Category.roots, partial: "layouts/category"
 
   = menu_group pull: :right do
     = drop_down "Settings" do

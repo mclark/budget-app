@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140323194009) do
+ActiveRecord::Schema.define(version: 20140327022111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,9 +27,15 @@ ActiveRecord::Schema.define(version: 20140323194009) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
   end
 
+  add_index "categories", ["depth"], name: "index_categories_on_depth", using: :btree
+  add_index "categories", ["lft"], name: "index_categories_on_lft", using: :btree
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+  add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
 
   create_table "mint_accounts", force: true do |t|
     t.integer  "mint_id"

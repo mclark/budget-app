@@ -1,0 +1,6 @@
+- if category.children.any?
+  = drop_down_submenu category.name do
+    = render collection: category.children, partial: "layouts/category"
+    
+- else
+  = menu_item "#{badge category.transactions_count} #{category.name}".html_safe, category_transactions_path(category)
