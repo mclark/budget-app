@@ -9,5 +9,5 @@
   %tbody
     - @spending.each do |category, cents|
       %tr
-        %td= category.name
+        %td= link_to category.name, category_transactions_path(category, q: {date_gt: Time.now.at_beginning_of_month.to_s(:db), date_lt: Time.now.at_end_of_month.to_s(:db)})
         %td.span2.amount= number_to_currency(cents_to_dollars(cents), unit: "")
