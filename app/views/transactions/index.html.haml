@@ -1,0 +1,22 @@
+= page_header "Transactions"
+
+%table.table.table-striped
+  %thead
+    %tr
+      %td Date
+      %td Description
+      %td Amount
+      %td Category
+      %td Account
+
+  %tbody
+    - collection.each do |t|
+      %tr{id: "transaction-#{t.id}"}
+        %td= t.date.to_s
+        %td= t.description
+        %td.amount{class: t.is_a?(Expense) ? "negative" : "positive"}= "%0.2f" % cents_to_dollars(t.cents)
+        %td= t.category.name
+        %td= t.account.name
+
+.row-fluid
+  .span12.text-center= paginate collection, theme: "twitter-bootstrap"

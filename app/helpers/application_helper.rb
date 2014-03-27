@@ -12,4 +12,10 @@ module ApplicationHelper
     (cents / 100.0).round(2)
   end  
 
+  def page_header(header="")
+    content_tag(:div, class: "page-header") do
+      content_tag(:h1, header)
+    end
+  end
+
 end

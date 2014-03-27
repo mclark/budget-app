@@ -12,3 +12,26 @@
  *= require select2
  *= require_self
  */
+
+td.amount {
+  position: relative;
+  text-align: right;
+
+  &.positive {
+    color: #74aa00;
+  }
+
+  &.negative {
+    color: #900;
+  }
+
+  &:before {
+    content: "$";
+    color: #999;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    padding: 8px;
+  }
+}
