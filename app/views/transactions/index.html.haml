@@ -17,7 +17,7 @@
     - collection.each do |t|
       %tr{id: "transaction-#{t.id}"}
         %td.span2= t.date.to_s
-        %td= t.description
+        %td= link_to t.description, edit_transaction_path(t, return_to: request.url)
         %td.span2.amount{class: t.is_a?(Expense) ? "negative" : "positive"}= number_to_currency(cents_to_dollars(t.cents), unit: "")
         %td= t.category.name
         %td.span2= t.account.name

@@ -7,7 +7,7 @@ MintApp::Application.routes.draw do
     resources :transactions, controller: "mint_transactions", as: "mint_transaction", only: %i(show update)
   end
 
-  resources :transactions, only: %i(index)
+  resources :transactions, only: %i(index edit update)
 
   resources :accounts do
     resources :transactions, only: %i(index)
