@@ -13,22 +13,22 @@ class ImportService
       client.go_transactions!
 
       client.accounts.each do |acc|
-        MintAccount.find_or_initialize_by(mint_id: acc.id) do |a|
-          a.name = acc.name
-        end.save
+        a = MintAccount.find_or_initialize_by(mint_id: acc.id)
+        a.name = acc.name
+        a.save
       end
 
       client.transactions.each do |txn|
-        MintTransaction.find_or_initialize_by(mint_id: txn.id) do |t|
-          t.date = txn.date
-          t.description = txn.description
-          t.category = txn.category
-          t.cents = txn.cents
-          t.expense = txn.is_expense
-          t.account = txn.account
-          t.account_id = txn.account_id
-          t.notes = txn.notes
-        end.save
+        t = MintTransaction.find_or_initialize_by(mint_id: txn.id)
+        t.date = txn.parsed_date
+        t.description = txn.description
+        t.category = txn.category
+        t.cents = txn.cents
+        t.expense = txn.is_expense
+        t.account = txn.account
+        t.account_id = txn.account_id
+        t.notes = txn.notes
+        t.save
       end
     rescue StandardError => error
       raise ImportError.new(error.message)
@@ -40,8 +40,12 @@ class ImportService
 private
   attr_reader :logger
 
+  def browser
+    @browser ||= Mint::WebDriverBrowser.new(Figaro.env.mint_selenium_url, logger: logger)
+  end
+
   def client
-    @client ||= Mint::Client.new(Figaro.env.mint_username, Figaro.env.mint_password, logger: logger)
+    @client ||= Mint::Client.new(browser, Figaro.env.mint_username, Figaro.env.mint_password, logger: logger)
   end
 
 end
