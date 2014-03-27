@@ -13,8 +13,13 @@ private
     _scope
   end
 
+  def query
+    @query ||= scope.ransack(params[:q])
+  end
+  helper_method :query
+
   def collection
-    scope.page(params.fetch(:page, 1)).per(50)
+    query.result.page(params.fetch(:page, 1)).per(50)
   end
   helper_method :collection
 

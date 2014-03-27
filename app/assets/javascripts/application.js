@@ -18,4 +18,8 @@
 
 $(document).ready(function() {
   $(".select2").select2();
+
+  $("#transaction_search").on("change", ":input", function() {
+    $("#transaction_search").submit()
+  });
 });

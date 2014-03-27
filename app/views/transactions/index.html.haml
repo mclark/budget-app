@@ -1,5 +1,9 @@
 = page_header "Transactions"
 
+= search_form_for query do |f|
+  = f.date_field :date_gt, placeholder: "from"
+  = f.date_field :date_lt, placeholder: "to"
+
 %table.table.table-striped
   %thead
     %tr
@@ -12,11 +16,11 @@
   %tbody
     - collection.each do |t|
       %tr{id: "transaction-#{t.id}"}
-        %td= t.date.to_s
+        %td.span2= t.date.to_s
         %td= t.description
-        %td.amount{class: t.is_a?(Expense) ? "negative" : "positive"}= "%0.2f" % cents_to_dollars(t.cents)
+        %td.span2.amount{class: t.is_a?(Expense) ? "negative" : "positive"}= number_to_currency(cents_to_dollars(t.cents), unit: "")
         %td= t.category.name
-        %td= t.account.name
+        %td.span2= t.account.name
 
 .row-fluid
   .span12.text-center= paginate collection, theme: "twitter-bootstrap"
