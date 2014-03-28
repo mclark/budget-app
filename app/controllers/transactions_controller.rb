@@ -1,3 +1,4 @@
+require 'transferize_policy'
 
 class TransactionsController < ApplicationController
 
@@ -18,6 +19,18 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def transferize
+    from = Transaction.find(params[:from_id])
+    to = Transaction.find(params[:to_id])
+
+    if (reason = TransferizePolicy.new(from, to).validate) == true
+      TransferizeService.new(from, to).call
+      render json: {}, status: :ok
+    else
+      render json: {reason: reason}, status: :bad_request
+    end
+  end
+
 private
 
   def filtered_params
@@ -25,7 +38,7 @@ private
   end
 
   def scope
-    _scope = Transaction.order("date desc").includes(:account, :category)
+    _scope = Transaction.order("date desc, cents desc, type desc, id asc").includes(:account, :category)
     _scope = _scope.where(account_id: params[:account_id]) if params[:account_id]
     _scope = _scope.where(category_id: params[:category_id]) if params[:category_id]
     _scope

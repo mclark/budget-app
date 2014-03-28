@@ -7,7 +7,10 @@ MintApp::Application.routes.draw do
     resources :transactions, controller: "mint_transactions", as: "mint_transaction", only: %i(show update)
   end
 
-  resources :transactions, only: %i(index edit update)
+  resources :transactions, only: %i(index edit update) do
+  end
+
+  patch "/transactions/:from_id/transferize/:to_id", as: :transferize_transaction, to: "transactions#transferize"
 
   resources :accounts do
     resources :transactions, only: %i(index)

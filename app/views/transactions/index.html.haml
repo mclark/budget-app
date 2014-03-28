@@ -1,12 +1,17 @@
 = page_header "Transactions"
 
-= search_form_for query do |f|
-  = f.date_field :date_gt, placeholder: "from"
-  = f.date_field :date_lt, placeholder: "to"
+#search
+  = search_form_for query do |f|
+    = f.date_field :date_gt, placeholder: "from"
+    = f.date_field :date_lt, placeholder: "to"
 
-%table.table.table-striped
+  .pull-right
+    = link_to "Make Transfer", transferize_transaction_path(":from_id", ":to_id"), id: "transferize", class: "btn btn-danger"
+
+%table#transactions.table.table-striped
   %thead
     %tr
+      %td.span1
       %td Date
       %td Description
       %td Amount
@@ -15,7 +20,8 @@
 
   %tbody
     - collection.each do |t|
-      %tr{id: "transaction-#{t.id}"}
+      %tr{id: "transaction-#{t.id}", data: {id: t.id}}
+        %td.span1= check_box_tag ""
         %td.span2= t.date.to_s
         %td= link_to t.description, edit_transaction_path(t, return_to: request.url)
         %td.span2.amount{class: t.is_a?(Expense) ? "negative" : "positive"}= number_to_currency(cents_to_dollars(t.cents), unit: "")

@@ -35,3 +35,29 @@ td.amount {
     padding: 8px;
   }
 }
+
+#search {
+
+  form {
+    display: inline;
+  }
+
+  &.affix {
+    width: 100%;
+    background-color: #eaeaea;
+    top: 0;
+    left: 0;
+    padding: 10px 0 3px 0;
+    border-bottom: 1px solid #bebebe;
+    box-shadow: 1px 1px 3px #aaa;
+    z-index: 100;
+
+    form {
+      margin-left: 20px;
+    }
+
+    .pull-right {
+      margin-right: 20px;
+    }
+  }
+}
