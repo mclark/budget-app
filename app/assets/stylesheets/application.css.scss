@@ -13,10 +13,7 @@
  *= require_self
  */
 
-td.amount {
-  position: relative;
-  text-align: right;
-
+.amount {
   &.positive {
     color: #74aa00;
   }
@@ -24,6 +21,11 @@ td.amount {
   &.negative {
     color: #900;
   }
+}
+
+td.amount {
+  position: relative;
+  text-align: right;
 
   &:before {
     content: "$";

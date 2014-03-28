@@ -1,13 +1,16 @@
-= page_header "This Month"
 
-%table.table.table-striped
-  %thead
-    %tr
-      %td Category
-      %td Amount
+.page-header
+  %h1
+    This Month
+    .pull-right
+      .amount{class: @net_income > 0 ? :positive : :negative}= number_to_currency(cents_to_dollars(@net_income), unit: "")
 
-  %tbody
-    - @spending.each do |category, cents|
-      %tr
-        %td= link_to category.name, category_transactions_path(category, q: {date_gt: Time.now.at_beginning_of_month.to_s(:db), date_lt: Time.now.at_end_of_month.to_s(:db)})
-        %td.span2.amount= number_to_currency(cents_to_dollars(cents), unit: "")
+- [[@income, "Income"], [@expenses, "Expenses"]].each do |categories, title|
+  %h3= title
+  %table.table.table-striped
+
+    %tbody
+      - categories.each do |category, cents|
+        %tr
+          %td= link_to category.name, category_transactions_path(category, q: {date_gteq: Time.now.at_beginning_of_month.strftime("%Y-%m-%d"), date_lteq: Time.now.at_end_of_month.strftime("%Y-%m-%d")})
+          %td.span2.amount= number_to_currency(cents_to_dollars(cents), unit: "")
