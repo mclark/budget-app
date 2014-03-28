@@ -17,6 +17,9 @@
         = drop_down_submenu "By Category" do
           = render collection: Category.roots, partial: "layouts/category"
 
+    = drop_down "Reports" do
+      = menu_item "Monthly Cashflow", current_monthly_cashflow_report_path
+
   = menu_group pull: :right do
     = drop_down "Settings" do
       = menu_item "Accounts", accounts_path

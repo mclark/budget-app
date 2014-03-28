@@ -23,6 +23,10 @@ $(document).ready(function() {
     $("#transaction_search").submit()
   });
 
+  $("#report-month").change(function() {
+    window.location = $(this).val();
+  });
+
   $("#search").affix();
 
   $("#transactions input[type=checkbox]").change(function() {
