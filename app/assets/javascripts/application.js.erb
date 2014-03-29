@@ -16,6 +16,8 @@
 //= require select2
 //= require_self
 
+window.routes = <%= Hash[Rails.application.routes.named_routes.routes.map {|k,v| [k, v.ast.to_s.gsub("(.:format)", "")] }].to_json %>
+
 $(document).ready(function() {
   $(".select2").select2();
 
@@ -24,7 +26,7 @@ $(document).ready(function() {
   });
 
   $("#report-month").change(function() {
-    window.location = $(this).val();
+    window.location = routes.monthly_cashflow_report.replace(":year-:month", $(this).val());
   });
 
   $("#search").affix();

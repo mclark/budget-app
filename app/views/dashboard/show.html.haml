@@ -2,19 +2,11 @@
 .page-header
   %h1
     %select#report-month
-      - selectable_periods.each do |year, month|
-        %option{value: monthly_cashflow_report_path(year, month), selected: year == selected_year && month == selected_month && "selected"}= Time.local(year, month, 1, 0, 0, 0).strftime("%B %Y")
+      = options_from_collection_for_select selectable_periods, :value, :text, "#{selected_year}-#{selected_month}"
 
     .pull-right
       Net: 
-      %span.amount{class: @net_income > 0 ? :positive : :negative}= number_to_currency(cents_to_dollars(@net_income))
+      %span.amount{class: @report.net_income > 0 ? :positive : :negative}= number_to_currency(cents_to_dollars(@report.net_income))
 
-- [[@income, "Income"], [@expenses, "Expenses"]].each do |categories, title|
-  %h3= title
-  %table.table.table-striped
-
-    %tbody
-      - categories.each do |category, cents|
-        %tr
-          %td= link_to category.name, category_transactions_path(category, q: {date_gteq: time.at_beginning_of_month.strftime("%Y-%m-%d"), date_lteq: time.at_end_of_month.strftime("%Y-%m-%d")})
-          %td.span2.amount= number_to_currency(cents_to_dollars(cents), unit: "")
+= render "dashboard/monthly_cashflow/group", title: "Income", entries: @report.income
+= render "dashboard/monthly_cashflow/group", title: "Expenses", entries: @report.expenses

@@ -1,0 +1,7 @@
+%h3= title
+%table.table.table-striped
+  %tbody
+    - entries.each do |entry|
+      %tr
+        %td= link_to entry.category.name, category_transactions_path(entry.category, q: {date_gteq: time.at_beginning_of_month.strftime("%Y-%m-%d"), date_lteq: time.at_end_of_month.strftime("%Y-%m-%d")})
+        %td.span2.amount= number_to_currency(cents_to_dollars(entry.cents), unit: "")
