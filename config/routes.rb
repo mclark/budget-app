@@ -1,9 +1,6 @@
 MintApp::Application.routes.draw do
   root to: 'dashboard#show'
 
-  get '/reports/monthly-cashflow', to: "dashboard#show", as: :current_monthly_cashflow_report
-  get '/reports/monthly-cashflow/:year-:month', to: 'dashboard#show', as: :monthly_cashflow_report, year: /\d{4}/, month: /\d{1,2}/
-
   get 'review', to: "review#index"
   scope path: 'review' do
     resources :accounts, controller: "mint_accounts", as: "mint_account", only: %i(show update)
@@ -21,5 +18,10 @@ MintApp::Application.routes.draw do
 
   resources :categories do
     resources :transactions, only: %i(index)
+  end
+
+  scope path: 'reports' do
+    get 'monthly-cashflow', to: "reports/monthly_cashflow#show", as: :current_monthly_cashflow_report
+    get 'monthly-cashflow/:year-:month', to: 'reports/monthly_cashflow#show', as: :monthly_cashflow_report, year: /\d{4}/, month: /\d{1,2}/
   end
 end
