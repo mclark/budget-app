@@ -9,7 +9,11 @@ module ApplicationHelper
   end
 
   def cents_to_dollars(cents)
-    (cents / 100.0).round(2)
+    if cents
+      (cents / 100.0).round(2)
+    else
+      0.00
+    end
   end  
 
   def page_header(header="")

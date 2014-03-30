@@ -1,5 +1,5 @@
 MintApp::Application.routes.draw do
-  root to: 'dashboard#show'
+  root to: 'reports/monthly_budget#show'
 
   get 'review', to: "review#index"
   scope path: 'review' do
@@ -21,7 +21,14 @@ MintApp::Application.routes.draw do
   end
 
   scope path: 'reports' do
-    get 'monthly-cashflow', to: "reports/monthly_cashflow#show", as: :current_monthly_cashflow_report
-    get 'monthly-cashflow/:year-:month', to: 'reports/monthly_cashflow#show', as: :monthly_cashflow_report, year: /\d{4}/, month: /\d{1,2}/
+    scope to: "reports/monthly_cashflow#show" do
+      get 'monthly-cashflow', as: :current_monthly_cashflow_report
+      get 'monthly-cashflow/:year-:month', as: :monthly_cashflow_report, year: /\d{4}/, month: /\d{1,2}/
+    end
+
+    scope to: "reports/monthly_budget#show" do
+      get 'monthly-budget', as: :current_monthly_budget_report
+      get 'monthly-budget/:year-:month', as: :monthly_budget_report, year: /\d{4}/, month: /\d{1,2}/
+    end
   end
 end

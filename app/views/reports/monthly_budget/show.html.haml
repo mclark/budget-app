@@ -1,0 +1,8 @@
+
+.page-header
+  %h1
+    %select#report-month
+      = options_from_collection_for_select selectable_periods, :value, :text, "#{selected_year}-#{selected_month}"
+
+= render "reports/monthly_budget/group", title: "My Budgets", entries: @report.budgeted
+= render "reports/monthly_budget/group", title: "Unbudgeted Expenses", entries: @report.unbudgeted

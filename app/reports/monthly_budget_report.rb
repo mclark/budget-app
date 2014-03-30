@@ -1,27 +1,31 @@
 
-class MonthlyCashflowReport
+class MonthlyBudgetReport
 
   def initialize(timestamp=Time.now)
     @timestamp = timestamp
   end
 
-  def income
-    @income ||= summarize Category.income.self_and_descendants
+  def budgeted
+    @budgeted ||= summarize Category.expense.self_and_descendants.budgeted
   end
 
-  def expenses
-    @expenses ||= summarize Category.expense.self_and_descendants
-  end
-
-  def net_income
-    income.map(&:cents).sum - expenses.map(&:cents).sum
+  def unbudgeted
+    @unbudgeted ||= summarize Category.expense.self_and_descendants.unbudgeted
   end
 
 private
   attr_reader :timestamp
 
-  CategorySummary = Struct.new(:category, :cents)
-  
+  CategorySummary = Struct.new(:category, :cents) do
+    def budget_percentage
+      if category.budgeted?
+        cents.to_f / category.budgeted_cents
+      else
+        0.0
+      end
+    end
+  end
+
   def time_period
     timestamp.at_beginning_of_month .. timestamp.at_end_of_month
   end

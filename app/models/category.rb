@@ -26,6 +26,9 @@ class Category < ActiveRecord::Base
     @transfer_to ||= where(parent_id: transfers, name: "Transfer To").first
   end
 
+  scope :budgeted, -> { where("budgeted_cents > 0") }
+  scope :unbudgeted, -> { where("budgeted_cents is null or budgeted_cents <= 0") }
+
   validates_inclusion_of :name, in: ALLOWED_ROOTS, if: :root?
 
   def can_edit?
@@ -39,5 +42,9 @@ class Category < ActiveRecord::Base
   def transactions_count
     # TODO: should include child category transactions count?
     transactions.count
+  end
+
+  def budgeted?
+    (budgeted_cents || 0) > 0
   end
 end
