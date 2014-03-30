@@ -6,6 +6,7 @@
       %th Spent
       %th
       %th Budgeted
+      %th Difference
   %tbody
     - entries.each do |entry|
       %tr
@@ -14,4 +15,9 @@
         %td
           - if entry.category.budgeted?
             %meter{value: entry.budget_percentage, optimum: 0.01, low: 0.5, high: 0.99999, style: "width:100%;"}
-        %td.span2.amount= number_to_currency(cents_to_dollars(entry.category.budgeted_cents), unit: "")
+        - if entry.category.budgeted?
+          %td.span2.amount= number_to_currency(cents_to_dollars(entry.category.budgeted_cents), unit: "")
+          %td.span2.amount{class: entry.budget_remaining > 0 ? "positive" : "negative"}= number_to_currency(cents_to_dollars(entry.budget_remaining), unit: "")
+        - else
+          %td.span2
+          %td.span2

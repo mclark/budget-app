@@ -26,7 +26,8 @@ $(document).ready(function() {
   });
 
   $("#report-month").change(function() {
-    window.location = routes.monthly_cashflow_report.replace(":year-:month", $(this).val());
+    var route = $(this).data("route");
+    window.location = routes[route].replace(":year-:month", $(this).val());
   });
 
   $("#search").affix();

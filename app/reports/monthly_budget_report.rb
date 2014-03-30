@@ -24,6 +24,14 @@ private
         0.0
       end
     end
+
+    def budget_remaining
+      if category.budgeted?
+        category.budgeted_cents - cents
+      else
+        0.0
+      end
+    end
   end
 
   def time_period
