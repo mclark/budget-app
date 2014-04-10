@@ -9,6 +9,14 @@ class MonthlyBudgetReport
     @budgeted ||= summarize Category.expense.self_and_descendants.budgeted
   end
 
+  def total_budget
+    @total_budget ||= Category.expense.self_and_descendants.budgeted.sum(:budgeted_cents)
+  end
+
+  def total_spending_remaining
+    total_budget - budgeted.map(&:budget_remaining).sum.abs
+  end
+
   def unbudgeted
     @unbudgeted ||= summarize Category.expense.self_and_descendants.unbudgeted
   end

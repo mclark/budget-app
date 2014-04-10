@@ -4,5 +4,13 @@
     %select#report-month{data: {route: "monthly_budget_report"}}
       = options_from_collection_for_select selectable_periods, :value, :text, "#{selected_year}-#{selected_month}"
 
+%div
+  %strong Budget:
+  = number_to_currency(cents_to_dollars(@report.total_budget))
+
+%div
+  %strong Remaining:
+  %span.amount{class: @report.total_spending_remaining > 0 ? 'positive' : 'negative'}= number_to_currency(cents_to_dollars(@report.total_spending_remaining))
+
 = render "reports/monthly_budget/group", title: "My Budgets", entries: @report.budgeted
 = render "reports/monthly_budget/group", title: "Unbudgeted Expenses", entries: @report.unbudgeted
