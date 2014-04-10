@@ -1,0 +1,2 @@
+#!/bin/bash
+whenever -s "path=$PWD" --update-crontab
