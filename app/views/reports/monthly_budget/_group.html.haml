@@ -17,7 +17,7 @@
             %meter{value: entry.budget_percentage, optimum: 0.01, low: 0.5, high: 0.99999, style: "width:100%;"}
         - if entry.category.budgeted?
           %td.span2.amount= link_to number_to_currency(cents_to_dollars(entry.category.budgeted_cents), unit: ""), edit_category_path(entry.category)
-          %td.span2.amount{class: entry.budget_remaining > 0 ? "positive" : "negative"}= number_to_currency(cents_to_dollars(entry.budget_remaining), unit: "")
+          %td.span2.amount{class: entry.budget_remaining >= 0 ? "positive" : "negative"}= number_to_currency(cents_to_dollars(entry.budget_remaining), unit: "")
         - else
           %td.span2= link_to "Set", edit_category_path(entry.category)
           %td.span2

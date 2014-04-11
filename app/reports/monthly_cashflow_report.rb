@@ -23,7 +23,7 @@ private
   CategorySummary = Struct.new(:category, :cents)
   
   def time_period
-    timestamp.at_beginning_of_month .. timestamp.at_end_of_month
+    timestamp.at_beginning_of_month.to_date .. timestamp.at_end_of_month.to_date
   end
 
   def totals_by_category
