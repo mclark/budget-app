@@ -38,10 +38,7 @@ private
   end
 
   def scope
-    _scope = Transaction.order("date desc, cents desc, type desc, id asc").includes(:account, :category)
-    _scope = _scope.where(account_id: params[:account_id]) if params[:account_id]
-    _scope = _scope.where(category_id: params[:category_id]) if params[:category_id]
-    _scope
+    Transaction.order("date desc, cents desc, type desc, id asc").includes(:account, :category)
   end
 
   def query

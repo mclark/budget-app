@@ -10,7 +10,7 @@
   %tbody
     - entries.each do |entry|
       %tr
-        %td.span3= link_to entry.category.name, category_transactions_path(entry.category, q: {date_gteq: time.at_beginning_of_month.strftime("%Y-%m-%d"), date_lteq: time.at_end_of_month.strftime("%Y-%m-%d")})
+        %td.span3= link_to entry.category.name, transactions_path(q: {date_gteq: time.at_beginning_of_month.strftime("%Y-%m-%d"), date_lteq: time.at_end_of_month.strftime("%Y-%m-%d"), category_id_eq: entry.category.id})
         %td.span2.amount= number_to_currency(cents_to_dollars(entry.cents), unit: "")
         %td
           - if entry.category.budgeted?

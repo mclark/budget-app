@@ -12,13 +12,8 @@ MintApp::Application.routes.draw do
 
   patch "/transactions/:from_id/transferize/:to_id", as: :transferize_transaction, to: "transactions#transferize"
 
-  resources :accounts do
-    resources :transactions, only: %i(index)
-  end
-
-  resources :categories do
-    resources :transactions, only: %i(index)
-  end
+  resources :accounts
+  resources :categories
 
   scope path: 'reports' do
     scope to: "reports/monthly_cashflow#show" do

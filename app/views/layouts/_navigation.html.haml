@@ -11,11 +11,11 @@
       - if Account.count > 0
         = drop_down_submenu "By Account" do
           - Account.all.each do |account|
-            = menu_item "#{badge account.transactions_count} #{account.name}".html_safe, account_transactions_path(account)
+            = menu_item "#{badge account.transactions_count} #{account.name}".html_safe, transactions_path(q: {account_id_eq: account.id})
 
       - if Category.count > 0
         = drop_down_submenu "By Category" do
-          = render collection: Category.roots, partial: "layouts/category"
+          = render collection: [Category.income, Category.expense], partial: "layouts/category"
 
     = drop_down "Reports" do
       = menu_item "Monthly Cashflow", current_monthly_cashflow_report_path
