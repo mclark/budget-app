@@ -35,4 +35,9 @@ private
   end
   helper_method :mint_transaction
 
+  def root_category
+    @_root_category ||= mint_transaction.expense ? Category.expense : Category.income
+  end
+  helper_method :root_category
+
 end
