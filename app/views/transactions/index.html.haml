@@ -4,6 +4,7 @@
   = search_form_for query do |f|
     = f.date_field :date_gteq, placeholder: "from"
     = f.date_field :date_lteq, placeholder: "to"
+    = select_tag "q[category_id_eq]", grouped_options_for_income_and_expenses(params.fetch(:q, {}).fetch(:category_id_eq, nil)), include_blank: true
 
   .pull-right
     = link_to "Make Transfer", transferize_transaction_path(":from_id", ":to_id"), id: "transferize", class: "btn btn-danger"

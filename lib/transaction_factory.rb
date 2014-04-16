@@ -1,3 +1,4 @@
+require 'transaction_similarity_analyzer'
 
 module TransactionFactory
 
@@ -6,8 +7,6 @@ module TransactionFactory
 
     trans.account = mint.mint_account.try(:account)
 
-    trans.category = Category.find_by(name: mint.category) || MintCategory.best_match(mint.category)
-
     trans.date = mint.date
 
     trans.description = mint.description
@@ -15,6 +14,11 @@ module TransactionFactory
     trans.cents = mint.cents
 
     trans.notes = mint.notes
+
+    #TODO: analyze transfers
+    trans.category = Category.find_by(name: mint.category) || 
+                     TransactionSimilarityAnalyzer.new(trans).best_category || 
+                     MintCategory.best_match(mint.category)
     
     trans
   end
