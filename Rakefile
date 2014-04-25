@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-MintApp::Application.load_tasks
+Budget::Application.load_tasks

@@ -1,4 +1,4 @@
-MintApp::Application.routes.draw do
+Budget::Application.routes.draw do
   root to: 'reports/monthly_budget#show'
 
   get 'review', to: "review#index"

@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-MintApp::Application.config.secret_key_base = 'e5f01f9873fc6644ce0fdfb846c84b72a46b7084c238cfe4c161a81af9cd27c75865d783e7c52f5e49d54073f1cfe69fbeb29d3a7ccebbe55c61234069bfde10'
+Budget::Application.config.secret_key_base = Figaro.env.secret_key_base
