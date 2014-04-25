@@ -14,7 +14,7 @@ class MonthlyBudgetReport
   end
 
   def total_spending_remaining
-    total_budget - budgeted.map(&:budget_remaining).sum.abs
+    total_budget - budgeted.map(&:cents).sum.abs
   end
 
   def unbudgeted
