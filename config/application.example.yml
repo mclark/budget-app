@@ -1,0 +1,4 @@
+MINT_USERNAME: john@example.com
+MINT_PASSWORD: secret
+MINT_SELENIUM_URL: http://localhost:9515 # chrome webdriver url (Default)
+SECRET_KEY_BASE: secret
