@@ -12,5 +12,15 @@
   %strong Remaining:
   %span.amount{class: @report.total_spending_remaining > 0 ? 'positive' : 'negative'}= number_to_currency(cents_to_dollars(@report.total_spending_remaining))
 
+%br
+
+%div
+  %strong Budgeted Spending:
+  %span.amount= number_to_currency(cents_to_dollars(@report.total_budgeted_spending))
+
+%div
+  %strong Unbudgeted Spending:
+  %span.amount= number_to_currency(cents_to_dollars(@report.total_unbudgeted_spending))
+
 = render "reports/monthly_budget/group", title: "My Budgets", entries: @report.budgeted
 = render "reports/monthly_budget/group", title: "Unbudgeted Expenses", entries: @report.unbudgeted

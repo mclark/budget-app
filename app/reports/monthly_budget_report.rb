@@ -21,6 +21,14 @@ class MonthlyBudgetReport
     @unbudgeted ||= summarize(Category.expense.self_and_descendants.unbudgeted).reject {|s| s.cents <= 0 }.sort_by(&:cents).reverse
   end
 
+  def total_unbudgeted_spending
+    unbudgeted.map(&:cents).sum.abs
+  end
+
+  def total_budgeted_spending
+    budgeted.map(&:cents).sum.abs
+  end
+
 private
   attr_reader :timestamp
 
