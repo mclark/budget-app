@@ -1,4 +1,5 @@
 require 'mint/model/alert'
+require 'mint/model/account'
 require 'mint/webdriver/page_element'
 
 module Mint
