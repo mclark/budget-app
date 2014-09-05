@@ -1,11 +1,11 @@
 
 namespace :import do
   task :all => :environment do
-    begin  
+    # begin  
       ImportService.new(logger: Rails.logger).call
-    rescue ImportService::ImportError => e
-      $stderr.puts "#{e.cause.class} raised in import"
-      raise e
-    end
+    # rescue ImportService::ImportError => e
+    #   $stderr.puts "#{e.cause.class} raised in import"
+    #   raise e
+    # end
   end
 end

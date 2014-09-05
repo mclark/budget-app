@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require 'pry'
+
+require File.expand_path("../config/environment", File.dirname(__FILE__))
+
+require 'mint/client'
+
+driver = Selenium::WebDriver.for(:remote, url: Figaro.env.mint_selenium_url)
+
+client = Mint::Client.new(driver, Figaro.env.mint_username, Figaro.env.mint_password, logger: Logger.new($stderr))
+
+binding.pry

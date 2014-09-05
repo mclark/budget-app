@@ -36,9 +36,6 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-# Mint API
-gem 'mint-api', git: "git@github.com:whoward/mint-api.git"
-
 # Cron tasks
 gem 'whenever'
 
@@ -54,3 +51,9 @@ gem 'ransack'
 # pagination
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
+
+
+# backends for mint api
+gem 'state_machine'
+gem 'chronic'
+gem 'selenium-webdriver'

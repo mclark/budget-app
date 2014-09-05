@@ -30,10 +30,10 @@ class ImportService
         t.notes = txn.notes
         t.save
       end
-    rescue StandardError => error
-      raise ImportError.new(error.message)
-    ensure
-      client.shutdown!
+    # rescue StandardError => error
+    #   raise ImportError.new(error.message)
+    # ensure
+      # client.shutdown!
     end
   end
 
