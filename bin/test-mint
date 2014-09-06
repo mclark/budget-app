@@ -3,11 +3,13 @@ require 'pry'
 
 require File.expand_path("../config/environment", File.dirname(__FILE__))
 
-require 'mint/client'
+require 'mint'
 
 driver = Selenium::WebDriver.for(:remote, url: Figaro.env.mint_selenium_url)
 
 client = Mint::Client.new(driver, Figaro.env.mint_username, Figaro.env.mint_password, logger: Logger.new($stderr))
+
+Mint.since_date = Chronic.parse("Aug 23 2014")
 
 client.state_machine.navigate_to_login
 

@@ -10,7 +10,7 @@ module Mint
         wait_for_selector(".overviewPage")
 
         if exists?("#systemMessages .refresh-message")
-          wait_for_selector("#systemMessages .refresh-message-done")
+          wait_for_selector("#systemMessages .refresh-message-done", timeout: 120)
         end
       end
 
