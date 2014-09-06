@@ -1,4 +1,4 @@
-require 'mint/client'
+require 'mint'
 
 class ImportService
   ImportError = Class.new(StandardError)
@@ -9,8 +9,11 @@ class ImportService
 
   def call
     begin
-      client.go_login!
-      client.go_transactions!
+      client.state_machine.navigate_to_login
+
+      client.state_machine.login
+
+      client.state_machine.navigate_to_transactions
 
       client.accounts.each do |acc|
         a = MintAccount.find_or_initialize_by(mint_id: acc.id)
@@ -30,22 +33,22 @@ class ImportService
         t.notes = txn.notes
         t.save
       end
-    # rescue StandardError => error
-    #   raise ImportError.new(error.message)
-    # ensure
-      # client.shutdown!
+    rescue StandardError => error
+      raise ImportError.new(error.message)
+    ensure
+      client.shutdown!
     end
   end
 
 private
   attr_reader :logger
 
-  def browser
-    @browser ||= Mint::WebDriverBrowser.new(Figaro.env.mint_selenium_url, logger: logger)
+  def driver
+    @driver ||= Selenium::WebDriver.for(:remote, url: Figaro.env.mint_selenium_url)
   end
 
   def client
-    @client ||= Mint::Client.new(browser, Figaro.env.mint_username, Figaro.env.mint_password, logger: logger)
+    @client ||= Mint::Client.new(driver, Figaro.env.mint_username, Figaro.env.mint_password, logger: logger)
   end
 
 end
