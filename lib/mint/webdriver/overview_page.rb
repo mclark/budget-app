@@ -21,6 +21,7 @@ module Mint
         wait_for_selector("#module-alert .alert-list > li")
 
         if exists?("#module-alert .see_all_button")
+          sleep(0.25)
           click("#module-alert .see_all_button")
         end
 
@@ -36,7 +37,7 @@ module Mint
         wait_for_selector(".accounts-list")
 
         find_all(".accounts-list > li.accounts-data-li").map do |account|
-          id = account["id"].match(/account-(\d+)/)[1]
+          id = account["id"].split("-").last.to_i
           name = account.text(".nickname")
 
           Mint::Account.new(id: id, name: name)

@@ -67,7 +67,11 @@ module Mint
       end
 
       def visible?(selector, type: :css)
-        exists?(selector, type: type) && driver.find_element(selector, type: type).displayed?
+        exists?(selector, type: type) && driver.find_element(type, selector).displayed?
+      end
+
+      def invisible?(selector, type: :css)
+        exists?(selector, type: type) && !driver.find_element(type, selector).displayed?
       end
 
       def screenshot(filename)

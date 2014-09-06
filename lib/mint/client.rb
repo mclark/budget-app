@@ -2,6 +2,7 @@ require 'mint/client/state_machine'
 require 'mint/webdriver/landing_page'
 require 'mint/webdriver/login_page'
 require 'mint/webdriver/overview_page'
+require 'mint/webdriver/transactions_page'
 require 'mint/null_logger'
 
 module Mint
@@ -49,6 +50,10 @@ module Mint
       current_page.login
     end
 
+    def visit_transactions
+      driver.find_element(:css, "#transaction a").click
+    end
+
     def perform_login
       current_page.login(email, password) do
         state_machine.logged_in!
@@ -60,7 +65,7 @@ module Mint
         case page_name
         when "login_loading" then Webdriver::LoginPage.new(driver)
         when "overview_loading" then Webdriver::OverviewPage.new(driver)
-        when "transactions_loading" then raise NotImplementedError
+        when "transactions_loading" then Webdriver::TransactionsPage.new(driver)
         else raise "unhandled state: #{page_name.inspect}"
         end
 
@@ -83,29 +88,6 @@ module Mint
       logger.debug "load_transactions"
       transactions.merge(current_page.transactions)
     end
-
-    # def do_transactions!
-    #   driver.click("#transaction a")
-    # end
-
-    # def load_transactions
-    #   page = TransactionsPage.new(driver)
-    #   page.wait_for_ajax_load!
-    #   page.assert_page!
-
-    #   loop do
-    #     #TODO: do a more intelligent merge
-    #     transactions.merge(page.transactions)
-
-    #     if page.last_page?
-    #       logger.debug("found last page of transactions - done importing")
-    #       break
-    #     else
-    #       logger.debug("loading next page of transactions")
-    #       page.next_page!
-    #     end
-    #   end
-    # end
 
   private
     attr_reader :email, :password, :domain, :driver, :current_page

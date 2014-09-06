@@ -33,6 +33,8 @@ module Mint
         event(:navigated_to_transactions) { transition :transactions_loading => :transactions }
 
         after_transition :to => :login_loading, do: -> (c,ev) { c.visit_login }
+        after_transition :from => any - %i(logging_in), :to => :overview_loading, do: -> (c,ev) { c.visit_overview }
+        after_transition :to => :transactions_loading, do: -> (c,ev) { c.visit_transactions }
 
         after_transition :to => :logging_in, do: -> (c,ev) { c.perform_login }
         after_transition any => navigation_loading_states + %i(login_loading), do: -> (c,ev) { c.load_page(ev.to) }
