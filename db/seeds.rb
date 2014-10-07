@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+income = Category.find_or_create_by(name: "Income")
+expense = Category.find_or_create_by(name: "Expense")
+transfers = Category.find_or_create_by(name: "Transfers")
+
+Category.find_or_create_by(name: "Transfer From", parent_id: transfers.id)
+Category.find_or_create_by(name: "Transfer To", parent_id: transfers.id)

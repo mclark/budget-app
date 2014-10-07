@@ -50,3 +50,14 @@ gem 'bootstrap-kaminari-views'
 gem 'state_machine'
 gem 'chronic'
 gem 'selenium-webdriver'
+
+group :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+end
+
+group :development do
+  gem 'pry'
+  gem 'pry-remote'
+end

@@ -5,7 +5,6 @@ class Category < ActiveRecord::Base
 
   ALLOWED_ROOTS = %w(Income Expense Transfers).freeze
 
-  # TODO: fixturize this data
   def self.income
     @income ||= roots.where(name: "Income").first
   end
@@ -26,10 +25,20 @@ class Category < ActiveRecord::Base
     @transfer_to ||= where(parent_id: transfers, name: "Transfer To").first
   end
 
+  def self.invalidate_cache!
+    @income = nil
+    @expense = nil
+    @transfers = nil
+    @transfer_from = nil
+    @transfer_to = nil
+  end
+
   scope :budgeted, -> { where("budgeted_cents > 0") }
   scope :unbudgeted, -> { where("budgeted_cents is null or budgeted_cents <= 0") }
 
   validates_inclusion_of :name, in: ALLOWED_ROOTS, if: :root?
+
+  after_create { Category.invalidate_cache! }
 
   def can_edit?
     can_destroy?
