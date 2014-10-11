@@ -9,6 +9,7 @@ module Mint
       end
 
       def login
+        sleep(1) # the page is often not interactive once "loaded" there is something missing but it's hard to track down
         click("#login_button")
       end
 

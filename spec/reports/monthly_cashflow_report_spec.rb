@@ -45,6 +45,12 @@ describe MonthlyCashflowReport do
 
       expect(subject.income.first.cents).to eq 1110
     end
+
+    it "does not include transactions belonging to a debt account" do
+      create(:transaction, cents: 100, category: work, account: create(:debt_account))
+
+      expect(subject.income).to be_empty
+    end
   end
 
   describe "#expenses" do
@@ -84,6 +90,13 @@ describe MonthlyCashflowReport do
 
       expect(subject.expenses.first.cents).to eq 1110
     end
+
+    it "does not include transactions belonging to a debt account" do
+      create(:transaction, cents: 100, category: rent, account: create(:debt_account))
+
+      expect(subject.expenses).to be_empty
+    end
+
   end
 
   describe "#net_income" do
@@ -93,6 +106,12 @@ describe MonthlyCashflowReport do
       create(:transaction, cents: 50, category: restaurants)
 
       expect(subject.net_income).to eq 9750
+    end
+
+    it "does not include debt in the calculation" do
+      create(:transaction, cents: 100, category: rent, account: create(:debt_account))
+
+      expect(subject.net_income).to eq 0
     end
   end
 end

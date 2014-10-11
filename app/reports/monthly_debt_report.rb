@@ -1,5 +1,5 @@
 
-class MonthlyCashflowReport
+class MonthlyDebtReport
 
   def initialize(timestamp=Time.now)
     @timestamp = timestamp
@@ -32,7 +32,7 @@ private
 
   def totals_by_category
     @totals_by_category ||= Transaction.where(date: time_period)
-                                       .where.not(account_id: debt_account_ids)
+                                       .where(account_id: debt_account_ids)
                                        .group(:category_id)
                                        .sum(:cents)
   end

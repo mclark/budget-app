@@ -5,6 +5,7 @@ module Reports
 
     def show
       @report = MonthlyCashflowReport.new(time)
+      @debt = MonthlyDebtReport.new(time)
     end
 
   private

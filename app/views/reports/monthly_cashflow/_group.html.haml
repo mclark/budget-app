@@ -5,3 +5,7 @@
       %tr
         %td= link_to entry.category.name, transactions_path(q: {date_gteq: time.at_beginning_of_month.strftime("%Y-%m-%d"), date_lteq: time.at_end_of_month.strftime("%Y-%m-%d"), category_id_eq: entry.category.id})
         %td.span2.amount= number_to_currency(cents_to_dollars(entry.cents), unit: "")
+
+    - if entries.empty?
+      %tr.empty
+        %td There are no transactions here
