@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require select2
+//= require d3
+//= require d3-tip
 //= require_self
 
 window.routes = <%= Hash[Rails.application.routes.named_routes.routes.map {|k,v| [k, v.ast.to_s.gsub("(.:format)", "")] }].to_json %>

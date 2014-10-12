@@ -16,6 +16,8 @@ Budget::Application.routes.draw do
   resources :categories
 
   scope path: 'reports' do
+    get 'monthly-debt', to: "reports/monthly_debt#show", as: :monthly_debt_report
+
     scope to: "reports/monthly_cashflow#show" do
       get 'monthly-cashflow', as: :current_monthly_cashflow_report
       get 'monthly-cashflow/:year-:month', as: :monthly_cashflow_report, year: /\d{4}/, month: /\d{1,2}/

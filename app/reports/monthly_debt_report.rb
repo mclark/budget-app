@@ -6,7 +6,7 @@ class MonthlyDebtReport
   end
 
   def income
-    @income ||= summarize Category.income.self_and_descendants
+    @income ||= summarize [Category.transfer_to]
   end
 
   def expenses
