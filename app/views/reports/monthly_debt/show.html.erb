@@ -1,4 +1,23 @@
 <style>
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  pointer-events: none;
+  text-shadow: 0px 0px 5px #fff;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+      stroke-width: 0;
+}
 
 .bar.positive {
   fill: steelblue;
@@ -14,25 +33,6 @@
 
 .bar.negative:hover {
   fill: indianred;
-}
-
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.grid .tick {
-    stroke: lightgrey;
-    opacity: 0.7;
-}
-.grid path {
-      stroke-width: 0;
 }
 
 .d3-tip {
@@ -63,104 +63,100 @@
   top: 100%;
   left: 0;
 }
-
 </style>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
 
-  var margin = {top: 30, right: 10, bottom: 10, left: 10},
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
-
-  var x = d3.scale.linear()
-      .range([0, width])
-
-  var y = d3.scale.ordinal()
-      .rangeRoundBands([0, height], .2);
-
-  window.xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("top");
-
-  window.tip = d3.tip()
-    .attr('class', 'd3-tip')
-    .offset([-10, 0])
-    .html(function(d) {
-      return "<strong>"+ d.month +":</strong> <span style='color:red'>" + d.net + "</span>";
-    });
-
-  window.svg = d3.select("#plot").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  svg.call(tip);
-
+var margin = {top: 50, right: 50, bottom: 50, left: 75};
+var width = 960 - margin.left - margin.right;
+var height = 500 - margin.top - margin.bottom;
 
 function make_x_axis() {        
-    return d3.svg.axis()
-        .scale(x)
-         .orient("bottom")
-         .ticks(5)
+  return d3.svg.axis()
+               .scale(xScale)
+               .orient("bottom")
+               .ticks(6)
 }
 
 function make_y_axis() {        
-    return d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        .ticks(5)
+  return d3.svg.axis()
+               .scale(yScale)
+               .orient("left")
+               .ticks(10)
 }
 
-  d3.csv("<%= monthly_debt_report_path(format: "csv") %>", type, function(error, data) {
-    x.domain(d3.extent(data, function(d) { return d.net; })).nice();
-    y.domain(data.map(function(d) { return d.month; }));
+function render(data) {
+  xScale.domain(d3.extent(data, function(d) { return d.month; }));
+  yScale.domain(d3.extent(data, function(d) { return d.net; }).reverse()).nice();
 
+  svg.append("g")         
+     .attr("class", "grid")
+     .attr("transform", "translate(0," + height + ")")
+     .call(make_x_axis().tickSize(-height, 0, 0).tickFormat(""))
 
-svg.append("g")         
-        .attr("class", "grid")
-        .attr("transform", "translate(0," + height + ")")
-        .call(make_x_axis()
-            .tickSize(-height, 0, 0)
-            .tickFormat("")
-        )
+  svg.append("g")         
+     .attr("class", "grid")
+     .call(make_y_axis().tickSize(-width, 0, 0).tickFormat(""))
 
-    svg.append("g")         
-        .attr("class", "grid")
-        .call(make_y_axis()
-            .tickSize(-width, 0, 0)
-            .tickFormat("")
-        )
+  svg.selectAll(".bar")
+      .data(data)
+     .enter().append("rect")
+      .attr("class", function(d) { return d.net < 0 ? "bar negative" : "bar positive"; })
+      .attr("x", function(d) { return xScale(d.month) - 20; })
+      .attr("y", function(d) { return yScale(Math.max(0, d.net)); })
+      .attr("width", 40)
+      .attr("height", function(d) { return Math.abs(yScale(d.net) - yScale(0)); })
+      .on("mouseover", tip.show)
+      .on("mouseout", tip.hide);
 
+  svg.append("g")
+     .attr("class", "x axis")
+     .attr("transform", "translate(0," + yScale(0) + ")")
+     .call(xAxis);
 
-    svg.selectAll(".bar")
-        .data(data)
-      .enter().append("rect")
-        .attr("class", function(d) { return d.net < 0 ? "bar negative" : "bar positive"; })
-        .attr("x", function(d) { return x(Math.min(0, d.net)); })
-        .attr("y", function(d) { return y(d.month); })
-        .attr("width", function(d) { return Math.abs(x(d.net) - x(0)); })
-        .attr("height", y.rangeBand())
-        .on("mouseover", tip.show)
-        .on("mouseout", tip.hide);
+  svg.append("g")
+     .attr("class", "y axis")
+     .call(yAxis);
+}
 
-    svg.append("g")
-        .attr("class", "x axis")
-        .call(xAxis);
+function main() {
+  window.svg = d3.select("#plot")
+                 .append("svg")
+                 .attr("width", width + margin.left + margin.right)
+                 .attr("height", height + margin.top + margin.bottom)
+                 .append("g")
+                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.append("g")
-        .attr("class", "y axis")
-      .append("line")
-        .attr("x1", x(0))
-        .attr("x2", x(0))
-        .attr("y2", height);
-  });
+  window.xScale = d3.time.scale()
+                         .range([0, width]);
 
-  function type(d) {
-    d.net = +d.net;
-    return d;
-  }
-}, false);
+  window.yScale = d3.scale.linear()
+                          .range([0, height]);
+
+  window.xAxis = d3.svg.axis()
+                       .scale(xScale)
+                       .orient("bottom")
+                       .ticks(d3.time.month, 1)
+                       .tickFormat(d3.time.format("%b"));
+
+  window.yAxis = d3.svg.axis()
+                       .scale(yScale)
+                       .orient("left")
+                       .tickFormat(function(x) { return accounting.formatMoney(x); });
+
+  window.tip = d3.tip()
+                 .attr('class', 'd3-tip')
+                 .offset([-10, 0])
+                 .html(function(d) {
+                   return "<strong>"+ d3.time.format("%b %Y")(d.month) +":</strong> <span style='color:red'>" + accounting.formatMoney(d.net) + "</span>";
+                 });
+
+  svg.call(tip);
+
+  d3.csv("<%= monthly_debt_report_path(format: "csv") %>")
+    .row(function(d) { return {month: new Date(Number(d.month)), net: Number(d.net)}; }) 
+    .get(function(error, data) { render(data); });
+}
+
+document.addEventListener("DOMContentLoaded", main, false);
 </script>
-
 <div id="plot" style="text-align: center"></div>
