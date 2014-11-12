@@ -17,6 +17,7 @@
 //= require d3
 //= require d3-tip
 //= require accounting
+//= require_tree ./plots
 //= require_self
 
 window.routes = <%= Hash[Rails.application.routes.named_routes.routes.map {|k,v| [k, v.ast.to_s.gsub("(.:format)", "")] }].to_json %>
