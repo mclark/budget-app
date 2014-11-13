@@ -47,7 +47,7 @@ class window.MoneyTimeBarPlot
 
   render: (data) ->
     make_x_axis = =>
-      d3.svg.axis().scale(@x_scale).orient("bottom").ticks(6)
+      d3.svg.axis().scale(@x_scale).orient("bottom").ticks(10)
 
     make_y_axis = =>
       d3.svg.axis().scale(@y_scale).orient("left").ticks(10)
