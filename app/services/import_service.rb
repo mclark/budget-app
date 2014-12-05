@@ -44,7 +44,7 @@ private
   attr_reader :logger
 
   def driver
-    @driver ||= Selenium::WebDriver.for(:remote, url: Figaro.env.mint_selenium_url)
+    @driver ||= Selenium::WebDriver.for(Figaro.env.selenium_driver.to_sym)
   end
 
   def client

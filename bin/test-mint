@@ -5,7 +5,7 @@ require File.expand_path("../config/environment", File.dirname(__FILE__))
 
 require 'mint'
 
-driver = Selenium::WebDriver.for(:remote, url: Figaro.env.mint_selenium_url)
+driver = Selenium::WebDriver.for(Figaro.env.selenium_driver.to_sym)
 
 client = Mint::Client.new(driver, Figaro.env.mint_username, Figaro.env.mint_password, logger: Logger.new($stderr))
 
