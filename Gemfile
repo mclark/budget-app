@@ -61,3 +61,7 @@ group :development do
   gem 'pry'
   gem 'pry-remote'
 end
+
+group :production do
+  gem 'unicorn'
+end
