@@ -50,6 +50,7 @@ gem 'bootstrap-kaminari-views'
 gem 'state_machine'
 gem 'chronic'
 gem 'selenium-webdriver'
+gem 'headless'
 
 group :test do
   gem 'rspec-rails'

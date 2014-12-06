@@ -1,5 +1,6 @@
-job_type :rake, "cd :path && RAILS_ENV=:rails_env rake :task >> log/cron.log 2>&1"
+job_type :rake, "cd :path && RAILS_ENV=:rails_env bundle exec rake :task >> log/cron.log 2>&1"
+job_type :xvfb_rake, "cd :path && XVFB=true RAILS_ENV=:rails_env bundle exec rake :task >> log/cron.log 2>&1"
 
-every 1.day, at: "11:00pm" do
-  rake "import:recent"
+every 1.day, at: "7:00am" do
+  xvfb_rake "import:recent"
 end

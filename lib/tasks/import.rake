@@ -1,12 +1,20 @@
 require 'mint'
 
 namespace :import do
-  task :all => :environment do
+  def import
     begin  
       ImportService.new(logger: Rails.logger).call
     rescue ImportService::ImportError => e
       $stderr.puts "#{e.cause.class} raised in import"
       raise e
+    end
+  end
+
+  task :all => :environment do
+    if ENV['XVFB'].present?
+      Headless.ly(display: "99") { import }
+    else
+      import
     end
   end
 

@@ -61,6 +61,7 @@ GEM
       thor (~> 0.14)
     haml (4.0.5)
       tilt
+    headless (1.0.2)
     hike (1.2.3)
     i18n (0.6.11)
     jquery-rails (3.1.2)
@@ -188,6 +189,7 @@ DEPENDENCIES
   factory_girl_rails
   figaro
   haml
+  headless
   jquery-rails
   kaminari
   pg
