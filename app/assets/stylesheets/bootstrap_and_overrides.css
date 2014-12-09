@@ -6,7 +6,7 @@
   =require twitter-bootstrap-static/fontawesome
   */
 
-.form-control.select2 {
+html.no-touch .form-control.select2 {
   padding: 0;
   border: none;
 }
