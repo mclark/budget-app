@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require modernizr/modernizr
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
@@ -23,7 +24,9 @@
 window.routes = <%= Hash[Rails.application.routes.named_routes.routes.map {|k,v| [k, v.ast.to_s.gsub("(.:format)", "")] }].to_json %>
 
 $(document).ready(function() {
-  $(".select2").select2();
+  if(!Modernizr.touch) {
+    $(".select2").select2();  
+  }
 
   $("#transaction_search").on("change", ":input", function() {
     $("#transaction_search").submit()

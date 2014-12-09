@@ -3,6 +3,7 @@
   "dependencies": {
     "select2": "latest",
     "d3": "latest",
-    "d3-tip": "latest"
+    "d3-tip": "latest",
+    "modernizr": "latest"
   }
 }
