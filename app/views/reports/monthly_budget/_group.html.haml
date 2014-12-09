@@ -10,14 +10,14 @@
   %tbody
     - entries.each do |entry|
       %tr
-        %td.span3= link_to entry.category.name, transactions_path(q: {date_gteq: time.at_beginning_of_month.strftime("%Y-%m-%d"), date_lteq: time.at_end_of_month.strftime("%Y-%m-%d"), category_id_eq: entry.category.id})
-        %td.span2.amount= number_to_currency(cents_to_dollars(entry.cents), unit: "")
-        %td
+        %td.col-md-3= link_to entry.category.name, transactions_path(q: {date_gteq: time.at_beginning_of_month.strftime("%Y-%m-%d"), date_lteq: time.at_end_of_month.strftime("%Y-%m-%d"), category_id_eq: entry.category.id})
+        %td.col-md-2.amount= number_to_currency(cents_to_dollars(entry.cents), unit: "")
+        %td.col-md-3
           - if entry.category.budgeted?
             %meter{value: entry.budget_percentage, optimum: 0.01, low: 0.5, high: 0.99999, style: "width:100%;"}
         - if entry.category.budgeted?
-          %td.span2.amount= link_to number_to_currency(cents_to_dollars(entry.category.budgeted_cents), unit: ""), edit_category_path(entry.category)
-          %td.span2.amount{class: entry.budget_remaining >= 0 ? "positive" : "negative"}= number_to_currency(cents_to_dollars(entry.budget_remaining), unit: "")
+          %td.col-md-2.amount= link_to number_to_currency(cents_to_dollars(entry.category.budgeted_cents), unit: ""), edit_category_path(entry.category)
+          %td.col-md-2.amount{class: entry.budget_remaining >= 0 ? "positive" : "negative"}= number_to_currency(cents_to_dollars(entry.budget_remaining), unit: "")
         - else
-          %td.span2= link_to "Set", edit_category_path(entry.category)
-          %td.span2
+          %td.col-md-2= link_to "Set", edit_category_path(entry.category)
+          %td.col-md-2

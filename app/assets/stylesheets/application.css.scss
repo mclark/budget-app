@@ -25,7 +25,7 @@
 }
 
 td.amount {
-  position: relative;
+  position: relative !important;
   text-align: right;
 
   &:before {

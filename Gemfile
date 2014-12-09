@@ -16,7 +16,7 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'bower-rails'
 
 # HTML framework
-gem 'twitter-bootstrap-rails', '2.2.8'
+gem 'twitter-bootstrap-rails', '3.2.0'
 
 # Form builder for bootstrap
 gem 'bootstrap_form'

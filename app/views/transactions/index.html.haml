@@ -1,11 +1,11 @@
 = page_header "Transactions"
 
 #search
-  = search_form_for query do |f|
-    = f.date_field :date_gteq, placeholder: "from"
-    = f.date_field :date_lteq, placeholder: "to"
-    = select_tag "q[category_id_eq]", grouped_options_for_income_and_expenses(params.fetch(:q, {}).fetch(:category_id_eq, nil)), include_blank: true
-    = f.collection_select :account_id_eq, Account.all, :id, :name, include_blank: true
+  = search_form_for query, class: "form-inline" do |f|
+    = f.date_field :date_gteq, placeholder: "from", class: "form-control"
+    = f.date_field :date_lteq, placeholder: "to", class: "form-control"
+    = select_tag "q[category_id_eq]", grouped_options_for_income_and_expenses(params.fetch(:q, {}).fetch(:category_id_eq, nil)), include_blank: true, class: "form-control"
+    = f.collection_select :account_id_eq, Account.all, :id, :name, {include_blank: true}, class: "form-control"
 
   .pull-right
     = link_to "Make Transfer", transferize_transaction_path(":from_id", ":to_id"), id: "transferize", class: "btn btn-danger"
@@ -31,4 +31,4 @@
         %td.span2= t.account.name
 
 .row-fluid
-  .span12.text-center= paginate collection, theme: "twitter-bootstrap"
+  .span12.text-center= paginate collection, theme: "twitter-bootstrap-3"
