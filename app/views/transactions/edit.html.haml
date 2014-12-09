@@ -4,7 +4,7 @@
   = hidden_field_tag :return_to, params[:return_to]
 
   %div
-    = f.collection_select :category_id, Category.all, :id, :name, {}, {class: "select2", style: "width:100%"}
+    = f.collection_select :category_id, root_category.descendants.sort_by(&:name), :id, :name, {}, {class: "select2", style: "width:100%"}
 
   %div
     = f.text_area :notes, class: "span12"

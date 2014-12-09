@@ -51,4 +51,9 @@ private
   end
   helper_method :collection
 
+  def root_category
+    @_root_category ||= @transaction.is_a?(Expense) ? Category.expense : Category.income
+  end
+  helper_method :root_category
+
 end
