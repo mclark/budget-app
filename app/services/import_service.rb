@@ -1,8 +1,6 @@
 require 'mint'
 
 class ImportService
-  ImportError = Class.new(StandardError)
-
   def initialize(logger: Mint::NullLogger)
     @logger = logger
   end
@@ -33,8 +31,6 @@ class ImportService
         t.notes = txn.notes
         t.save
       end
-    rescue StandardError => error
-      raise ImportError.new(error.message)
     ensure
       client.shutdown!
     end

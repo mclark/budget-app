@@ -1,13 +1,9 @@
 require 'mint'
+require 'logger'
 
 namespace :import do
   def import!
-    begin  
-      ImportService.new(logger: Rails.logger).call
-    rescue ImportService::ImportError => e
-      $stderr.puts "#{e.cause.class} raised in import"
-      raise e
-    end
+    ImportService.new(logger: Logger.new($stdout)).call
   end
 
   task :all => :environment do
