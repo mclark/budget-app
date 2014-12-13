@@ -4,6 +4,10 @@ require 'logger'
 namespace :import do
   def import!
     ImportService.new(logger: Logger.new($stdout)).call
+
+    if [MintAccount, MintTransaction].any? {|model| model.not_imported.any? }
+      ApplicationMailer.review_reminder.deliver
+    end
   end
 
   task :all => :environment do

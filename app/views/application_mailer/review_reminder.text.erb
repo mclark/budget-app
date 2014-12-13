@@ -1,0 +1,9 @@
+
+Hello
+
+You have some stuff to review:
+
+<% if @txn_count > 0 %>- <%= pluralize @txn_count, "transaction" %><% end %>
+<% if @acc_count > 0 %>- <%= pluralize @acc_count, "account" %><% end %>
+
+Visit <%= review_url %> to review these items.

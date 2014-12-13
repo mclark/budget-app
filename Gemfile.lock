@@ -27,10 +27,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    airbrake (3.1.12)
-      activesupport
+    airbrake (4.1.0)
       builder
-      json
+      multi_json
     arel (5.0.1.20140414130214)
     awesome_nested_set (3.0.1)
       activerecord (>= 4.0.0, < 5)
@@ -183,7 +182,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake (= 3.1.12)
+  airbrake (= 4.1.0)
   awesome_nested_set
   bootstrap-kaminari-views
   bootstrap_form

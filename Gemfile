@@ -52,8 +52,8 @@ gem 'chronic'
 gem 'selenium-webdriver'
 gem 'headless'
 
-# error monitoring (very old i know, but i havent updated my errbit server in ages)
-gem "airbrake", "3.1.12"
+# error reporting
+gem "airbrake", "4.1.0"
 
 group :test do
   gem 'rspec-rails'

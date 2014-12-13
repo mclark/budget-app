@@ -1,6 +1,10 @@
+DOMAIN: www.mybudgetapp.com
 MINT_USERNAME: john@example.com
 MINT_PASSWORD: secret
 SELENIUM_DRIVER: firefox
 SECRET_KEY_BASE: secret
-ERRBIT_API_KEY: "secret"
-ERRBIT_HOST: 'www.myerrbithost.com'
+ERRBIT_API_KEY: secret
+ERRBIT_HOST: www.myerrbithost.com
+GMAIL_USERNAME: me@gmail.com
+GMAIL_PASSWORD: appspecificpassword
+MAIL_RECIPIENT: me+budget@gmail.com
