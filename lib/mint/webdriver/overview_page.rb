@@ -9,6 +9,11 @@ module Mint
       def wait_for_loaded!
         wait_for_selector(".overviewPage")
 
+        if Mint.force_refresh && exists?("#module-accounts-update") && !exists?("#module-accounts-update.disabled")
+          click("#module-accounts-update")
+          sleep(1.0)
+        end
+
         if exists?("#systemMessages .refresh-message")
           wait_for_selector("#systemMessages .refresh-message-done", timeout: 120)
         end

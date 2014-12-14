@@ -11,6 +11,8 @@ namespace :import do
   end
 
   task :all => :environment do
+    Mint.force_refresh = true
+
     if ENV['XVFB'].present?
       Headless.ly(display: "99") { import! }
     else
