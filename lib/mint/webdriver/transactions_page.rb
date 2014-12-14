@@ -38,21 +38,19 @@ module Mint
         transactions.map(&:parsed_date).min
       end
 
-      def before_since_date?
-        Mint.since_date && transactions.any? && minimum_date <= Mint.since_date
-      end
-
       def account_nickname_map
         accounts.map {|a| [a.name, a.id] }.to_h
       end
 
       def load_transactions!
-        loop do
-          load_page_transactions!
+        catch(:done) do
+          loop do
+            load_page_transactions!
 
-          break if pager.last_page? || before_since_date?
+            break if pager.last_page?
 
-          pager.next_page!
+            pager.next_page!
+          end
         end
       end
 
@@ -68,7 +66,7 @@ module Mint
         id_list.each do |dom_id|
           txn = TransactionRow.new(driver, dom_id, account_nickname_map).transaction
 
-          break if Mint.since_date && txn.parsed_date < Mint.since_date
+          throw(:done) if Mint.since_date && txn.parsed_date < Mint.since_date
 
           transactions << txn
         end

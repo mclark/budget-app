@@ -19,7 +19,10 @@ namespace :import do
   end
 
   task :recent => :environment do
-    Mint.since_date = Transaction.maximum(:date).to_time - 1.week
+    max = [Transaction.maximum(:date), MintTransaction.maximum(:date)].max
+    
+    Mint.since_date = max.to_time - 1.week
+    
     Rake::Task["import:all"].invoke
   end
 end
