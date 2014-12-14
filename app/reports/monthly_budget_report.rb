@@ -54,12 +54,19 @@ private
     end
   end
 
+  def debt_account_ids
+    @debt_account_ids ||= Account.debt.pluck(:id)
+  end
+
   def time_period
     timestamp.at_beginning_of_month.to_date .. timestamp.at_end_of_month.to_date
   end
 
   def totals_by_category
-    @totals_by_category ||= Transaction.where(date: time_period).group(:category_id).sum(:cents)
+    @totals_by_category ||= Transaction.where(date: time_period)
+                                       .where.not(account_id: debt_account_ids)
+                                       .group(:category_id)
+                                       .sum(:cents)
   end
 
   def summarize(categories)
