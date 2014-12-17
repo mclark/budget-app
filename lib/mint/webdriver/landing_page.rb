@@ -5,12 +5,22 @@ module Mint
     class LandingPage < PageElement
 
       def wait_for_loaded!
-        wait_for_selector("#login_button")
+        wait_for_selector(".login-signup-menu .js-auth-slider-toggle--login")
       end
 
-      def login
-        sleep(1) # the page is often not interactive once "loaded" there is something missing but it's hard to track down
-        click("#login_button")
+      def login(email, password, &callback)
+        click(".login-signup-menu .js-auth-slider-toggle--login")
+
+        # fill in the login form
+        type("#edit-username", email)
+        type("#edit-password", password)
+        click("#mint-auth-mint-com-login-form button")
+
+        # busy wait on AJAX submit
+        # wait_for_missing_selector("#form-login")
+
+        # let them know we're done logging in
+        callback.call
       end
 
     end

@@ -1,6 +1,5 @@
 require 'mint/client/state_machine'
 require 'mint/webdriver/landing_page'
-require 'mint/webdriver/login_page'
 require 'mint/webdriver/overview_page'
 require 'mint/webdriver/transactions_page'
 require 'mint/null_logger'
@@ -46,10 +45,6 @@ module Mint
 
 # -- 'Friend Methods' - please treat these as private --------------------------
 
-    def visit_login
-      current_page.login
-    end
-
     def visit_transactions
       driver.find_element(:css, "#transaction a").click
     end
@@ -63,7 +58,6 @@ module Mint
     def load_page(page_name)
       @current_page = 
         case page_name
-        when "login_loading" then Webdriver::LoginPage.new(driver)
         when "overview_loading" then Webdriver::OverviewPage.new(driver)
         when "transactions_loading" then Webdriver::TransactionsPage.new(driver)
         else raise "unhandled state: #{page_name.inspect}"

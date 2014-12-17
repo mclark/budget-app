@@ -7,8 +7,6 @@ class ImportService
 
   def call
     begin
-      client.state_machine.navigate_to_login
-
       client.state_machine.login
 
       client.state_machine.navigate_to_transactions

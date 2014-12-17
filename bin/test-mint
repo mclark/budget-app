@@ -11,8 +11,6 @@ client = Mint::Client.new(driver, Figaro.env.mint_username, Figaro.env.mint_pass
 
 Mint.since_date = Chronic.parse("Aug 23 2014")
 
-client.state_machine.navigate_to_login
-
 client.state_machine.login
 
 client.state_machine.navigate_to_transactions

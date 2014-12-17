@@ -7,8 +7,6 @@ module Mint
       state_machine :state, initial: :landing_page do
         state :landing_page
 
-        state :login
-        state :login_loading
         state :logging_in
         
         state :overview
@@ -20,10 +18,7 @@ module Mint
         navigation_states = %i(overview transactions)
         navigation_loading_states = navigation_states.map {|s| "#{s}_loading".to_sym }
 
-        event(:navigate_to_login) { transition :landing_page => :login_loading }
-        event(:navigated_to_login) { transition :login_loading => :login }
-
-        event(:login) { transition :login => :logging_in }
+        event(:login) { transition :landing_page => :logging_in }
         event(:logged_in) { transition :logging_in => :overview_loading }
 
         event(:navigate_to_overview) { transition navigation_states => :overview_loading }
@@ -32,12 +27,11 @@ module Mint
         event(:navigate_to_transactions) { transition navigation_states => :transactions_loading }
         event(:navigated_to_transactions) { transition :transactions_loading => :transactions }
 
-        after_transition :to => :login_loading, do: -> (c,ev) { c.visit_login }
         after_transition :from => any - %i(logging_in), :to => :overview_loading, do: -> (c,ev) { c.visit_overview }
         after_transition :to => :transactions_loading, do: -> (c,ev) { c.visit_transactions }
 
         after_transition :to => :logging_in, do: -> (c,ev) { c.perform_login }
-        after_transition any => navigation_loading_states + %i(login_loading), do: -> (c,ev) { c.load_page(ev.to) }
+        after_transition any => navigation_loading_states, do: -> (c,ev) { c.load_page(ev.to) }
 
         after_transition :to => :overview, do: -> (c,ev) { c.load_alerts }
         after_transition :to => :overview, do: -> (c,ev) { c.load_accounts }
