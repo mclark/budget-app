@@ -27,5 +27,10 @@ Budget::Application.routes.draw do
       get 'monthly-budget', as: :current_monthly_budget_report
       get 'monthly-budget/:year-:month', as: :monthly_budget_report, year: /\d{4}/, month: /\d{1,2}/
     end
+
+    scope controller: "reports/category_spending" do
+      get 'category-spending', action: :index, as: :category_spending_reports
+      get 'category-spending/:category_id', action: :show, as: :category_spending_report
+    end
   end
 end

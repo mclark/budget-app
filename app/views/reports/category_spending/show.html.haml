@@ -1,0 +1,20 @@
+.page-header
+   - if @category.expense?
+      %h1 Spending for #{@category.name}
+   - else
+      %h1 Income for #{@category.name}
+
+%div
+   %strong Monthly Average:
+   = number_to_currency(cents_to_dollars(@report.monthly_average))
+
+%table.table.table-striped
+   %thead
+      %tr
+         %th Month
+         %th Spent
+   %tbody
+      - @report.groups.reverse.each do |group|
+         %tr
+            %td.col-md-6= link_to group.start_of_period.strftime("%B %Y"), transactions_path(q: {date_gteq: group.start_of_period.strftime("%Y-%m-%d"), date_lteq: group.end_of_period.strftime("%Y-%m-%d"), category_id_eq: @category.id})
+            %td.col-md-6.amount= number_to_currency(cents_to_dollars(group.cents), unit: "")

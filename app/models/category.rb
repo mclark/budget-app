@@ -56,4 +56,16 @@ class Category < ActiveRecord::Base
   def budgeted?
     (budgeted_cents || 0) > 0
   end
+
+  def income?
+    root == Category.income
+  end
+
+  def expense?
+    root == Category.expense
+  end
+
+  def transfer?
+    root == Category.transfers
+  end
 end
