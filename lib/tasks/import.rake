@@ -27,4 +27,14 @@ namespace :import do
     
     Rake::Task["import:all"].invoke
   end
+
+  task :since => :environment do
+    Mint.since_date = Chronic.parse(ENV.fetch("SINCE"))
+
+    print "Did you mean #{Mint.since_date.strftime("%b %d %Y")}? <Y/N>"
+
+    exit unless $stdin.readline.strip.downcase == "y"
+
+    Rake::Task["import:all"].invoke
+  end
 end
