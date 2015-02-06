@@ -64,6 +64,9 @@ module Mint
         end
 
         id_list.each do |dom_id|
+          # ignore 'deal' rows
+          next if dom_id == "transaction-deal-row"
+
           txn = TransactionRow.new(driver, dom_id, account_nickname_map).transaction
 
           throw(:done) if Mint.since_date && txn.parsed_date < Mint.since_date

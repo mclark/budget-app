@@ -11,13 +11,12 @@ module Mint
       def login(email, password, &callback)
         click(".login-signup-menu .js-auth-slider-toggle--login")
 
+        wait_for { visible?("#edit-username") }
+
         # fill in the login form
         type("#edit-username", email)
         type("#edit-password", password)
         click("#mint-auth-mint-com-login-form button")
-
-        # busy wait on AJAX submit
-        # wait_for_missing_selector("#form-login")
 
         # let them know we're done logging in
         callback.call
