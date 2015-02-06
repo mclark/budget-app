@@ -21,7 +21,7 @@ module Mint
 
       def alerts
         #TODO: not sure if this actually works - will need a fresh account to test
-        return unless exists?("#module-alert")
+        return [] unless exists?("#module-alert")
         
         wait_for_selector("#module-alert .alert-list > li")
 
