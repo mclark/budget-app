@@ -7,4 +7,8 @@ class Transaction < ActiveRecord::Base
   validates :cents, presence: true
   validates :date, presence: true
   validates :description, presence: true
+
+  def signed_cents
+    cents
+  end
 end

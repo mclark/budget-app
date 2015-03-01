@@ -1,25 +1,12 @@
-require 'transaction_similarity_analyzer'
+require 'transaction_factory/new_transaction_strategy'
+require 'transaction_factory/duplicate_transaction_strategy'
 
 module TransactionFactory
 
   def self.build_with_inference_from_mint_transaction(mint)
-    trans = mint.expense ? Expense.new : Income.new
-
-    trans.account = mint.mint_account.try(:account)
-
-    trans.date = mint.date
-
-    trans.description = mint.description
-
-    trans.cents = mint.cents
-
-    trans.notes = mint.notes
-
-    #TODO: analyze transfers
-    trans.category = Category.find_by(name: mint.category) || 
-                     TransactionSimilarityAnalyzer.new(trans).best_category || 
-                     MintCategory.best_match(mint.category)
-    
-    trans
+    [
+      DuplicateTransactionStrategy.new(mint),
+      NewTransactionStrategy.new(mint)
+    ].each {|strategy| value = strategy.call; break value if value }
   end
 end
