@@ -45,7 +45,16 @@ td.amount {
     display: inline;
   }
 
-  &.affix {
+}
+
+@media(max-width:767px) {
+  #search.affix {
+    position: static;
+  }
+}
+
+@media(min-width:768px) {
+  #search.affix {
     width: 100%;
     background-color: #eaeaea;
     top: 0;
