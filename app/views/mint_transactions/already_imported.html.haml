@@ -1,0 +1,10 @@
+= page_header "Already Imported"
+
+%p.lead
+  It looks like this record has already been imported, you can import it again 
+  if you want.
+
+= link_to "Next Record", review_path, class: "btn btn-success btn-lg"
+.visible-xs-block
+  %br
+= link_to "Reimport", mint_transaction_path(mint_transaction, reimport: "yes"), class: "btn btn-danger btn-lg"

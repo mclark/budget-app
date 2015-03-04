@@ -9,6 +9,8 @@ class MintTransactionsController < ApplicationController
 
     if @imported_transaction.new_record? || params[:duplicate] == "no"
       render 'new'
+    elsif mint_transaction.imported_id && params[:reimport] != 'yes'
+      render 'already_imported'
     else
       render 'duplicate'
     end
