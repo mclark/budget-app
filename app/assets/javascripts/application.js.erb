@@ -12,7 +12,9 @@
 //
 //= require modernizr/modernizr
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
+//= require turbolinks
 //= require twitter/bootstrap
 //= require select2
 //= require d3
@@ -20,6 +22,8 @@
 //= require accounting
 //= require_tree ./plots
 //= require_self
+
+Turbolinks.enableProgressBar();
 
 window.routes = <%= Hash[Rails.application.routes.named_routes.routes.map {|k,v| [k, v.ast.to_s.gsub("(.:format)", "")] }].to_json %>
 

@@ -55,6 +55,10 @@ gem 'headless'
 # error reporting
 gem "airbrake", "4.1.0"
 
+# faster pages
+gem "turbolinks", "2.5.3"
+gem "jquery-turbolinks", "2.1.0"
+
 group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
