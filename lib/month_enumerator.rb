@@ -3,7 +3,7 @@ class MonthEnumerator
    include Enumerable
 
    def self.since_first_transaction
-      date = Transaction.minimum(:date)
+      date = Transaction.minimum(:date) || Time.now
       new(date.year, date.month)
    end
 

@@ -2,7 +2,7 @@ require 'mint/client/state_machine'
 require 'mint/webdriver/landing_page'
 require 'mint/webdriver/overview_page'
 require 'mint/webdriver/transactions_page'
-require 'mint/null_logger'
+require 'budget/null_logger'
 
 module Mint
   #TODO: this is really a driver - the client should instrument it (perform actions to load data it wants)
@@ -10,7 +10,7 @@ module Mint
 
     attr_reader :logger, :state_machine
 
-    def initialize(driver, email, password, domain: "http://www.mint.com", logger: NullLogger)
+    def initialize(driver, email, password, domain: "http://www.mint.com", logger: Budget::NullLogger)
       @driver = driver
 
       @email = email
@@ -56,7 +56,7 @@ module Mint
     end
 
     def load_page(page_name)
-      @current_page = 
+      @current_page =
         case page_name
         when "overview_loading" then Webdriver::OverviewPage.new(driver)
         when "transactions_loading" then Webdriver::TransactionsPage.new(driver)

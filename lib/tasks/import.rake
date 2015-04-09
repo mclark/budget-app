@@ -22,9 +22,9 @@ namespace :import do
 
   task :recent => :environment do
     max = [Transaction.maximum(:date), ImportableTransaction.maximum(:date)].max
-    
+
     Mint.since_date = max.to_time - 1.week
-    
+
     Rake::Task["import:all"].invoke
   end
 
@@ -36,5 +36,11 @@ namespace :import do
     exit unless $stdin.readline.strip.downcase == "y"
 
     Rake::Task["import:all"].invoke
+  end
+
+  #temporary task to just bootstrap us for now
+  # TODO write a configuration mechanism to import all the things
+  task :pcfinancial => :environment do
+    PcFinancialImportService.new.call(since: Date.new(2015, 1, 1))
   end
 end

@@ -52,6 +52,9 @@ gem 'chronic'
 gem 'selenium-webdriver'
 gem 'headless'
 
+# scraper for pc financial
+gem 'mechanize'
+
 # error reporting
 gem "airbrake", "4.1.0"
 
@@ -61,6 +64,8 @@ gem "jquery-turbolinks", "2.1.0"
 
 group :test do
   gem 'rspec-rails'
+  gem 'rspec-its'
+  gem 'webmock'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
 end
@@ -68,6 +73,8 @@ end
 group :development do
   gem 'pry'
   gem 'pry-remote'
+  gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :production do

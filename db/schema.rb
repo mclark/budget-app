@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417200858) do
+ActiveRecord::Schema.define(version: 20150510222321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
+
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -42,7 +43,7 @@ ActiveRecord::Schema.define(version: 20150417200858) do
   add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
 
   create_table "importable_accounts", force: true do |t|
-    t.integer  "source_id"
+    t.string   "source_id"
     t.integer  "imported_id"
     t.string   "name"
     t.datetime "created_at"
@@ -60,7 +61,7 @@ ActiveRecord::Schema.define(version: 20150417200858) do
   end
 
   create_table "importable_transactions", force: true do |t|
-    t.integer  "source_id"
+    t.string   "source_id"
     t.integer  "imported_id"
     t.date     "date"
     t.string   "description"

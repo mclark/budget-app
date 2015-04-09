@@ -1,12 +1,12 @@
 require 'mint/webdriver/dsl'
-require 'mint/null_logger'
+require 'budget/null_logger'
 
 module Mint
   module Webdriver
     class PageElement
       include DSL
 
-      def initialize(driver, logger: NullLogger)
+      def initialize(driver, logger: Budget::NullLogger)
         @driver = driver
         @logger = logger
       end

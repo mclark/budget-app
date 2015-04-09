@@ -10,7 +10,7 @@
   .row-fluid
     .span6
       = f.form_group :amount, label: {text: "Amount"} do
-        %strong.form-control.read-only= number_to_currency cents_to_dollars importable_transaction.signed_cents
+        %strong.form-control.read-only.amount{class: importable_transaction.expense ? "negative" : "positive"}= number_to_currency cents_to_dollars importable_transaction.signed_cents
       = f.collection_select :account_id, Account.order(:name), :id, :name, {help: "Imported from: #{importable_transaction.account}"}, {class: "select2", style: "width:100%;"}
       = f.collection_select :category_id, root_category.descendants.sort_by(&:name), :id, :name, {help: "Imported from: #{importable_transaction.category}"}, {class: "select2", style: "width:100%;"}
 

@@ -1,4 +1,4 @@
-require 'mint/null_logger'
+require 'budget/null_logger'
 
 module Mint
   module Webdriver
@@ -9,7 +9,7 @@ module Mint
       end
 
       def logger
-        Mint::NullLogger
+        Budget::NullLogger
       end
 
       def goto(url)
@@ -17,7 +17,7 @@ module Mint
         driver.get(url)
         nil
       end
-      
+
       def path
         URI.parse(driver.current_url).path
       end
