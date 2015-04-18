@@ -14,11 +14,11 @@ module ReviewConcern
 private
 
   def unimported_accounts
-    MintAccount.not_imported
+    ImportableAccount.not_imported
   end
 
   def unimported_transactions
-    MintTransaction.not_imported
+    ImportableTransaction.not_imported
   end
 
 end

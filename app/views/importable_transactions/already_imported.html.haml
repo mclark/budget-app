@@ -7,4 +7,4 @@
 = link_to "Next Record", review_path, class: "btn btn-success btn-lg"
 .visible-xs-block
   %br
-= link_to "Reimport", mint_transaction_path(mint_transaction, reimport: "yes"), class: "btn btn-danger btn-lg"
+= link_to "Reimport", importable_transaction_path(importable_transaction, reimport: "yes"), class: "btn btn-danger btn-lg"

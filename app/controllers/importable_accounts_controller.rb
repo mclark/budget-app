@@ -1,5 +1,5 @@
 
-class MintAccountsController < ApplicationController
+class ImportableAccountsController < ApplicationController
   include ReviewConcern
 
   def show
@@ -9,10 +9,10 @@ class MintAccountsController < ApplicationController
 
   def update
     # TODO: missing features
-    # - merge a mint account into an existing account
+    # - merge a importable account into an existing account
     # - reject an account (do not import)
     # - push off an account for later review
-    if MintAccountImportService.new(account, filtered_params).call.success?
+    if AccountImportService.new(account, filtered_params).call.success?
       redirect_to next_review_url
     else
       render 'show'
@@ -22,11 +22,11 @@ class MintAccountsController < ApplicationController
 private
 
   def filtered_params
-    params.require(:mint_account).permit(:name)
+    params.require(:importable_account).permit(:name)
   end
   
   def account
-    @_account ||= MintAccount.find(params[:id])
+    @_account ||= ImportableAccount.find(params[:id])
   end
   helper_method :account
 
