@@ -1,6 +1,6 @@
 
 module TransactionFactory
-  class DuplicateTransactionStrategy < Struct.new(:mint)
+  class DuplicateTransactionStrategy < Struct.new(:txn)
 
     def call
       scope = base_scope
@@ -11,17 +11,17 @@ module TransactionFactory
   private
 
     def imported_account
-      mint.mint_account.try(:account)
+      txn.importable_account.try(:account)
     end
 
     def imported_type
-      mint.expense ? Expense : Income
+      txn.expense ? Expense : Income
     end
 
     # a scope that matches all transactions on attributes which must match
     def base_scope
-      Transaction.where(cents: mint.cents, type: imported_type)
-                 .where("date between ? and ?", mint.date - 1.day, mint.date + 1.day)
+      Transaction.where(cents: txn.cents, type: imported_type)
+                 .where("date between ? and ?", txn.date - 1.day, txn.date + 1.day)
     end
 
   end

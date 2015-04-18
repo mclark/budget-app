@@ -3,8 +3,8 @@ Budget::Application.routes.draw do
 
   get 'review', to: "review#index"
   scope path: 'review' do
-    resources :accounts, controller: "mint_accounts", as: "mint_account", only: %i(show update)
-    resources :transactions, controller: "mint_transactions", as: "mint_transaction", only: %i(show update)
+    resources :accounts, controller: "importable_accounts", as: "importable_account", only: %i(show update)
+    resources :transactions, controller: "importable_transactions", as: "importable_transaction", only: %i(show update)
   end
 
   resources :transactions, only: %i(index edit update) do

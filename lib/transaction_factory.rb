@@ -3,10 +3,10 @@ require 'transaction_factory/duplicate_transaction_strategy'
 
 module TransactionFactory
 
-  def self.build_with_inference_from_mint_transaction(mint)
+  def self.build_with_inference_from_importable_transaction(txn)
     [
-      DuplicateTransactionStrategy.new(mint),
-      NewTransactionStrategy.new(mint)
+      DuplicateTransactionStrategy.new(txn),
+      NewTransactionStrategy.new(txn)
     ].each {|strategy| value = strategy.call; break value if value }
   end
 end

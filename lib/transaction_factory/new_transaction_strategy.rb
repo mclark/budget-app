@@ -1,24 +1,24 @@
 require 'transaction_similarity_analyzer'
 
 module TransactionFactory
-  class NewTransactionStrategy < Struct.new(:mint)
+  class NewTransactionStrategy < Struct.new(:txn)
 
     def call
-      trans = mint.expense ? Expense.new : Income.new
+      trans = txn.expense ? Expense.new : Income.new
 
-      trans.account = mint.mint_account.try(:account)
+      trans.account = txn.importable_account.try(:account)
 
-      trans.date = mint.date
+      trans.date = txn.date
 
-      trans.description = mint.description
+      trans.description = txn.description
 
-      trans.cents = mint.cents
+      trans.cents = txn.cents
 
-      trans.notes = mint.notes
+      trans.notes = txn.notes
 
-      trans.category = Category.find_by(name: mint.category) ||
+      trans.category = Category.find_by(name: txn.category) ||
                        TransactionSimilarityAnalyzer.new(trans).best_category ||
-                       MintCategory.best_match(mint.category)
+                       ImportableCategory.best_match(txn.category)
 
       trans
     end

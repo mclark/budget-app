@@ -5,7 +5,7 @@ namespace :import do
   def import!
     ImportService.new(logger: Logger.new($stdout)).call
 
-    if [MintAccount, MintTransaction].any? {|model| model.not_imported.any? }
+    if [ImportableAccount, ImportableTransaction].any? {|model| model.not_imported.any? }
       ApplicationMailer.review_reminder.deliver
     end
   end
@@ -21,7 +21,7 @@ namespace :import do
   end
 
   task :recent => :environment do
-    max = [Transaction.maximum(:date), MintTransaction.maximum(:date)].max
+    max = [Transaction.maximum(:date), ImportableTransaction.maximum(:date)].max
     
     Mint.since_date = max.to_time - 1.week
     

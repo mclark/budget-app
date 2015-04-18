@@ -1,4 +1,4 @@
-class MintCategory < ActiveRecord::Base
+class ImportableCategory < ActiveRecord::Base
 
   belongs_to :category, foreign_key: "imported_id", class_name: "Category"
 

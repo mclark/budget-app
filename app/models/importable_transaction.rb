@@ -1,5 +1,5 @@
-class MintTransaction < ActiveRecord::Base
-  belongs_to :mint_account, class_name: "MintAccount", foreign_key: "account_id", primary_key: "mint_id"
+class ImportableTransaction < ActiveRecord::Base
+  belongs_to :importable_account, class_name: "ImportableAccount", foreign_key: "account_id", primary_key: "source_id"
 
   scope :imported, -> { where("imported_id is not null") }
   scope :not_imported, -> { where(imported_id: nil) }

@@ -1,0 +1,24 @@
+= page_header "Review new transaction"
+
+%p.lead
+  You have a newly imported transaction. Make changes below as you wish
+  then click the "Verify" button to import it.
+
+= bootstrap_form_for imported_transaction, as: :transaction, url: importable_transaction_path(importable_transaction), method: :patch do |f|
+  = f.hidden_field :cents
+
+  .row-fluid
+    .span6
+      = f.form_group :amount, label: {text: "Amount"} do
+        %strong.form-control.read-only= number_to_currency cents_to_dollars importable_transaction.signed_cents
+      = f.collection_select :account_id, Account.order(:name), :id, :name, {help: "Imported from: #{importable_transaction.account}"}, {class: "select2", style: "width:100%;"}
+      = f.collection_select :category_id, root_category.descendants.sort_by(&:name), :id, :name, {help: "Imported from: #{importable_transaction.category}"}, {class: "select2", style: "width:100%;"}
+
+    .span6
+      = f.text_field :date, type: "date", class: "span12"
+      = f.text_field :description, class: "span12"
+      = f.text_area :notes, class: "span12"
+
+  .row-fluid
+    .form-actions.span12
+      = f.submit "Verify", class: "btn btn-primary"

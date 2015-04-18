@@ -12,32 +12,32 @@
       %tr
         %th{scope: "row"} Date
         %td= imported_transaction.date
-        %td= mint_transaction.date
+        %td= importable_transaction.date
 
       %tr
         %th{scope: "row"} Account
         %td= imported_transaction.account.name
-        %td= mint_transaction.account
+        %td= importable_transaction.account
 
       %tr
         %th{scope: "row"} Description
         %td= imported_transaction.description
-        %td= mint_transaction.description
+        %td= importable_transaction.description
 
       %tr
         %th{scope: "row"} Amount
         %td= number_to_currency cents_to_dollars imported_transaction.signed_cents
-        %td= number_to_currency cents_to_dollars mint_transaction.signed_cents
+        %td= number_to_currency cents_to_dollars importable_transaction.signed_cents
 
       %tr
         %th{scope: "row"} Category
         %td= imported_transaction.category.name
-        %td= mint_transaction.category
+        %td= importable_transaction.category
 
 .text-center
-  = bootstrap_form_for mint_transaction, as: :transaction do |f|
+  = bootstrap_form_for importable_transaction, as: :transaction do |f|
     = f.hidden_field :imported_id, value: imported_transaction.id
     = f.submit "Verify Duplicate", class: "btn btn-success btn-lg"
     .visible-xs-block
       %br
-    = link_to "Not a Duplicate", mint_transaction_path(mint_transaction, duplicate: "no"), class: "btn btn-danger btn-lg"
+    = link_to "Not a Duplicate", importable_transaction_path(importable_transaction, duplicate: "no"), class: "btn btn-danger btn-lg"

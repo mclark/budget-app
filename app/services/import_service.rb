@@ -12,13 +12,13 @@ class ImportService
       client.state_machine.navigate_to_transactions
 
       client.accounts.each do |acc|
-        a = MintAccount.find_or_initialize_by(mint_id: acc.id)
+        a = ImportableAccount.find_or_initialize_by(source_id: acc.id)
         a.name = acc.name
         a.save
       end
 
       client.transactions.each do |txn|
-        t = MintTransaction.find_or_initialize_by(mint_id: txn.id)
+        t = ImportableTransaction.find_or_initialize_by(source_id: txn.id)
         t.date = txn.parsed_date
         t.description = txn.description
         t.category = txn.category

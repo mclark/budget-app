@@ -3,7 +3,7 @@ require 'awesome_nested_set_tree'
 module ApplicationHelper
 
   def review_count
-    @review_count ||= MintAccount.not_imported.count + MintTransaction.not_imported.count
+    @review_count ||= ImportableAccount.not_imported.count + ImportableTransaction.not_imported.count
   end
 
   def transactions_count
